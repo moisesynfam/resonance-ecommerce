@@ -11,19 +11,22 @@ import Footer from './components/Footer';
 
 function App() {
   return (
-    <Layout className="App" style={{ background: '#fff'}}>
+    
       
-      <Layout.Content style={{ height: '100%', width: '100%'}} >
+      
         <BrowserRouter>
-          <div style={{ height: '100%', width: '100%'}}>
+          <Layout className="App" style={{ background: '#fff'}}>
             <Header/>
-            <Route path="/" exact component={Home} />
-            <Route path="/signUp" exact component={SignUp} />
-          </div>
+            <Layout.Content style={{ height: '100%', width: '100%'}} >
+              <Route path="/" exact component={Home} />
+              <Route path="/signUp" exact component={SignUp} />
+            </Layout.Content>
+            <Footer/>
+          </Layout>
         </BrowserRouter>
-      </Layout.Content>
-      <Footer/>
-    </Layout>
+     
+      
+    
   );
 }
 
