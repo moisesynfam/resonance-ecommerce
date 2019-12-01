@@ -46,3 +46,7 @@ footer {
 .App-link {
   color: #09d3ac;
 }
+
+.page-container {
+  margin-top: 10px;
+}

@@ -83,7 +83,7 @@ class SignUp extends React.Component {
           };
 
         return (
-            <div style={{ marginTop: '10px'}}>
+            <div className="page-container">
                 
                 <Row type="flex" justify="center">
                     <Col span={24} >

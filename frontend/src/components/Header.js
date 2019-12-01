@@ -29,6 +29,13 @@ class Header extends React.Component {
                                 </Link>
                                
                             </Menu.Item>
+                            <Menu.Item key="log-in">
+                                <Link to="/login">
+                                    <Icon type="user" />
+                                    Log in
+                                </Link>
+                               
+                            </Menu.Item>
                             <Menu.Item key="sign-up">
                                 <Link to="/signUP">
                                     <Icon type="mail" />

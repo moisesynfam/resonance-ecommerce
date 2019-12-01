@@ -39,7 +39,6 @@ router.post('/register', (req, res) => {
     }
 
     //check if an User exists with these credentials.
-    let usersFound = [];
     db('Users').select({
         // Selecting the first 3 records in Grid view:
         filterByFormula: `OR( email = "${req.body.email}", username = "${req.body.username}")`,
