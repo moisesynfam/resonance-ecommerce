@@ -4,8 +4,11 @@
   "main": "server.js",
   "license": "MIT",
   "scripts": {
+    "frontend-install": "cd ./frontend && yarn install",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "frontend": "cd ./frontend && yarn start",
+    "server": "nodemon server.js",
+    "dev": "concurrently \"yarn run server\" \"yarn run frontend\""
   },
   "dependencies": {
     "airtable": "^0.8.0",
