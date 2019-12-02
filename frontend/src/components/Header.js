@@ -24,6 +24,41 @@ class Header extends React.Component {
         }
 
     }
+    _renderAuthLinks = () => {
+
+        if(this.props.auth.isAuthenticated) {
+            return (
+            <React.Fragment>
+                <Menu.Item key="log-out">
+                    <Link to="/">
+                        <Icon type="logout" />
+                        Log out
+                    </Link>
+                </Menu.Item>
+            </React.Fragment>
+            
+            )
+        }
+
+        return (
+            <React.Fragment>
+                <Menu.Item key="log-in">
+                    <Link to="/login">
+                        <Icon type="user" />
+                        Log in
+                    </Link>
+                </Menu.Item>
+
+                <Menu.Item key="sign-up">
+                    <Link to="/signUP">
+                        <Icon type="mail" />
+                        Sign Up
+                    </Link>
+                </Menu.Item>
+            </React.Fragment>
+
+        )
+    }
     render() {
         return (
             <Layout.Header>
@@ -38,28 +73,10 @@ class Header extends React.Component {
                                 </Link>
                                
                             </Menu.Item>
-                            <Menu.Item key="log-out">
-                                <Link to="/">
-                                    <Icon type="logout" />
-                                    Log out
-                                </Link>
-                               
-                            </Menu.Item>
-                            <Menu.Item key="log-in">
-                                <Link to="/login">
-                                    <Icon type="user" />
-                                    Log in
-                                </Link>
-                               
-                            </Menu.Item>
-
-                            <Menu.Item key="sign-up">
-                                <Link to="/signUP">
-                                    <Icon type="mail" />
-                                    Sign Up
-                                </Link>
-                               
-                            </Menu.Item>
+                            
+                            { this._renderAuthLinks()}
+                          
+                            
                         </Menu>
                     </Col>
                 </Row>

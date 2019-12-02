@@ -6,6 +6,10 @@ import { createStore, applyMiddleware } from 'redux';
 import reduxThunk from 'redux-thunk';
 import reducers from './redux/reducers';
 
+import jwt_decode from "jwt-decode";
+import setAuthToken from "./utils/setAuthToken";
+import { setCurrentUser, logoutUser } from "../authActions";
+
 import { Layout } from 'antd';
 
 import Home from './pages/Home';
