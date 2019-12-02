@@ -2,6 +2,9 @@ import React from 'react';
 import './Header.css';
 import { Layout, Menu, Breadcrumb, Typography, Row, Col, Icon  } from 'antd';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { logoutUser } from '../redux/actions/auth';
 
 const { Title } = Typography;
 
@@ -13,7 +16,13 @@ class Header extends React.Component {
     }
 
     _handleNavbarClick = (e) => {
-        this.setState({ currentPage: e.key })
+        const key = e.key;
+        this.setState({ currentPage: key });
+        if(key === 'log-out') {
+            this.props.logoutUser();
+            // this.props.history.push('/')
+        }
+
     }
     render() {
         return (
@@ -29,6 +38,13 @@ class Header extends React.Component {
                                 </Link>
                                
                             </Menu.Item>
+                            <Menu.Item key="log-out">
+                                <Link to="/">
+                                    <Icon type="logout" />
+                                    Log out
+                                </Link>
+                               
+                            </Menu.Item>
                             <Menu.Item key="log-in">
                                 <Link to="/login">
                                     <Icon type="user" />
@@ -36,6 +52,7 @@ class Header extends React.Component {
                                 </Link>
                                
                             </Menu.Item>
+
                             <Menu.Item key="sign-up">
                                 <Link to="/signUP">
                                     <Icon type="mail" />
@@ -53,4 +70,10 @@ class Header extends React.Component {
     }
 }
 
-export default Header;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.auth
+    }
+}
+
+export default connect(mapStateToProps, { logoutUser })( withRouter(Header) );

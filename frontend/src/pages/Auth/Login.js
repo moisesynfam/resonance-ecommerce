@@ -1,17 +1,31 @@
 import React from 'react';
-import { Form, Input, Button, Row, Col, Icon, Card, Typography, Divider } from 'antd';
+import { Form, Input, Button, Row, Col, Icon, Card, Typography, Divider, message } from 'antd';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { loginUser } from '../../redux/actions/auth';
 
 class Login extends React.Component {
 
+
     _onSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFieldsAndScroll( (err, values) => {
+        this.props.form.validateFieldsAndScroll( async (err, values) => {
             if(!err) {
                 console.log("Login form values", values);
+                const results = await this.props.loginUser(values, this.props.history);
+
+                if(!results.success) {
+                    message.error(results.message);
+                } else {
+                    this.props.history.push('/')
+                }
             }
+
         })
     }
+
     render() {
         const { getFieldDecorator } = this.props.form;
         
@@ -69,4 +83,12 @@ class Login extends React.Component {
     }
 }
 
-export default Form.create({ name: 'login'})(Login);
+
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+}
+
+const formCapsule = Form.create({ name: 'login'})(Login);
+export default connect(mapStateToProps, { loginUser })( withRouter(formCapsule));

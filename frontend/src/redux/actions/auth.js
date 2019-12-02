@@ -7,43 +7,44 @@ const types = {
     USER_LOADED: 'USER_LOADED'
 }
 
-export const registerUser = (formData, history) => async (dispatch, getState) => {
+export const registerUser = (formData) => async (dispatch, getState) => {
     try {
         const { username, password } = formData;
+        
         const results = await ResonanceApi.auth.register(formData);
 
         if(!results.success) return { success: false, errors: results};
 
-        history.push('/login');
+        // history.push('/login');
 
 
     } catch (err) {
 
         console.warn("Error submiting form", err);
-        return { success: false, message: err.getMessage()}
+        return { success: false, message: err.message}
 
 
     }
 }
 
-export const loginUser = (loginData, history) => async (dispatch, getState) => {
+export const loginUser = (loginData) => async (dispatch, getState) => {
     try {
         
         const results = await ResonanceApi.auth.login(loginData);
 
-        if(!results.success) return { success: false, errors: results};
+        if(!results.success) return results;
 
         const { token } = results;
         localStorage.setItem('jwtToken', token);
         ResonanceApi.setAuthToken(token);
         const decoded = jwtDecode(token);
-        await dispatch(loadUser(decoded));
-        history.push('/');
+        dispatch(loadUser(decoded));
+        // history.push('/');
 
     } catch (err) {
 
         console.warn("Error submiting form", err);
-        return { success: false, message: err.getMessage()}
+        return { success: false, message: err.message}
 
 
     }

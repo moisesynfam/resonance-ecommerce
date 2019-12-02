@@ -8,7 +8,13 @@ import {
     Typography
 } from "antd";
 
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
+import { registerUser } from '../../redux/actions/auth';
+
 const { Title } = Typography;
+
 
 class SignUp extends React.Component {
 
@@ -20,19 +26,45 @@ class SignUp extends React.Component {
         password: '',
         password2: '',
         password2Dirty: false,
+        errors: {},
 
 
     }
 
-    _onSubmit = e => {
+    _onSubmit = (e) => {
         e.preventDefault();
-        this.props.form.validateFieldsAndScroll((err, values) => {
+        this.setState({ errors: {}});
+        this.props.form.validateFieldsAndScroll(async (err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const results = await this.props.registerUser(values);
+                console.log({results});
+                if(!results.success){
+                    this.setState({ errors: results.errors}, () => {
+                        this.props.form.validateFields(['email'], { force: true})
+                    });
+                } else {
+                    this.props.history.push('/login')
+                }
+
+
             }
         });
     }
+    _onEmailChange = e => {
+        if(!this.state.errors.email) return;
+        const errors = {...this.state.errors};
+        delete errors.email;
+        this.setState({errors});
 
+    }
+    _validateEmail = (rule, value, callback) => {
+        if(this.state.errors.email) {
+            callback(this.state.errors.email);
+        } else {
+            callback()
+        }
+    }
     _validateToNextPassword = (rule, value, callback) => {
         const { form } = this.props;
         if (value && this.state.password2Dirty) {
@@ -138,9 +170,12 @@ class SignUp extends React.Component {
                                         {
                                             type: 'email',
                                             message: 'Invalid e-mail format.'
+                                        },
+                                        {
+                                            validator: this._validateEmail
                                         }
                                     ]
-                                })(<Input/>)}
+                                })(<Input onChange={this._onEmailChange}/>)}
                             </Form.Item>
                             <Form.Item label='Password'>
                                 {getFieldDecorator('password',{
@@ -182,4 +217,13 @@ class SignUp extends React.Component {
 
 }
 
-export default Form.create({name: 'register'})(SignUp);
+const mapStateToProps = state => {
+
+    return {
+        auth: state.auth
+    }
+}
+const formCapsule = Form.create({name: 'register'})(SignUp);
+const withRouterCapsule = withRouter(formCapsule);
+
+export default connect( mapStateToProps, { registerUser })(withRouterCapsule);

@@ -92,12 +92,12 @@ router.post('/login', (req, res) => {
         }
 
         if(isEmpty(records))
-            return res.status(400).json({ username: "Username not found"});
+            return res.status(400).json({ success: false, message: "Username or password incorrect"});
         const user = records[0];
         bycrypt.compare(password, user.get('Password'), (err, success) => {
             if(err) throw err;
 
-            if(!success) return res.status(400).json({password: "Password incorrect"});
+            if(!success) return res.status(400).json({ success: false, message: "Username or password incorrect"});
 
             const jwtPaylod = {
                 username: user.get('username'),
