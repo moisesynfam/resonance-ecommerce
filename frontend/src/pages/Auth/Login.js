@@ -8,7 +8,11 @@ import { loginUser } from '../../redux/actions/auth';
 
 class Login extends React.Component {
 
-
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+            this.props.history.push("/");   
+        }
+    }
     _onSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll( async (err, values) => {

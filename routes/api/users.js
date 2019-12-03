@@ -35,19 +35,29 @@ router.post('/register', (req, res) => {
 
     //check basic validation
     if (!isValid) {
-        return res.status(400).json(errors);
+        return res.status(400).json({success: false, errors});
     }
+
+    const { email, username } = req.body;
 
     //check if an User exists with these credentials.
     db('Users').select({
         // Selecting the first 3 records in Grid view:
-        filterByFormula: `OR( email = "${req.body.email}", username = "${req.body.username}")`,
+        filterByFormula: `OR( email = "${email}", username = "${username}")`,
         view: "Grid view"
     }).firstPage( ( err,records) => {
               
         if (err) { console.error(err); return res.status(500).json(err); }
-        if(!isEmpty(records)) 
-            return res.status(400).json({ email: 'A user with this email already exists'});
+        
+        const errors = {};
+        
+        if(records.find( (record) => record.get('username') === username))
+            errors.username = 'A user with this username already exists.';
+        if(records.find( (record) => record.get('email') === email))
+            errors.email = 'A user with this e-mail already exists.';
+
+        if(!isEmpty(errors)) 
+            return res.status(400).json({success: false, errors});
         
         //Encrypt the password and store the new user
         bycrypt.genSalt(10, (err, salt) => {
@@ -66,7 +76,7 @@ router.post('/register', (req, res) => {
                         return res.status(500).json(err);
                     }
 
-                    return res.json({ user: record})
+                    return res.json({ success: true, user: record})
                 });                
                 
             });

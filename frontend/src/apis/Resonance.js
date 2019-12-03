@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+axios.defaults.validateStatus = (status) => {
+    return status < 500;
+}
 
 export default { 
     setAuthToken: (token) => {
@@ -15,13 +18,16 @@ export default {
             
             const response = await axios.post('/api/users/register', formData);
             const { data } = response;
+            //here we don't throw an error since we want to receive the validation errors and display them on the form 
             return data;
         },
         login: async (loginData) => {
             
             const response = await axios.post('/api/users/login', loginData);
             const { data } = response;
-            return data;
+            if(!data.success) throw new Error(data.message);
+
+            return data.token;
         },
     }
 }

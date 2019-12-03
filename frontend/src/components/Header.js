@@ -24,41 +24,51 @@ class Header extends React.Component {
         }
 
     }
-    _renderAuthLinks = () => {
+    
+    _getAuthLinks = () => {
+        const links = [];
 
         if(this.props.auth.isAuthenticated) {
-            return (
-            <React.Fragment>
+            links.push(          
                 <Menu.Item key="log-out">
                     <Link to="/">
                         <Icon type="logout" />
                         Log out
                     </Link>
                 </Menu.Item>
-            </React.Fragment>
-            
-            )
-        }
+            );
 
-        return (
-            <React.Fragment>
+            links.push(          
+                <Menu.Item key="my-account">
+                    <Link to="/myAccount">
+                        <Icon type="user" />
+                        My Account
+                    </Link>
+                </Menu.Item>
+            );
+
+        } else {
+            links.push( 
                 <Menu.Item key="log-in">
                     <Link to="/login">
                         <Icon type="user" />
                         Log in
                     </Link>
                 </Menu.Item>
-
+            );
+            links.push(
                 <Menu.Item key="sign-up">
                     <Link to="/signUP">
                         <Icon type="mail" />
                         Sign Up
                     </Link>
                 </Menu.Item>
-            </React.Fragment>
-
-        )
+            );
+            
+        }  
+        return links;
     }
+
     render() {
         return (
             <Layout.Header>
@@ -74,9 +84,7 @@ class Header extends React.Component {
                                
                             </Menu.Item>
                             
-                            { this._renderAuthLinks()}
-                          
-                            
+                            { this._getAuthLinks().map( link => (link))}
                         </Menu>
                     </Col>
                 </Row>

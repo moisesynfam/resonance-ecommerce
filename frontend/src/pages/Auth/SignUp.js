@@ -19,16 +19,13 @@ const { Title } = Typography;
 class SignUp extends React.Component {
 
     state = {
-        firstName: '',
-        lastName: '',
-        username: '',
-        email: '',
-        password: '',
-        password2: '',
-        password2Dirty: false,
         errors: {},
+    }
 
-
+    componentDidMount() {
+        if (this.props.auth.isAuthenticated) {
+          this.props.history.push("/");
+        }
     }
 
     _onSubmit = (e) => {
@@ -41,7 +38,7 @@ class SignUp extends React.Component {
                 console.log({results});
                 if(!results.success){
                     this.setState({ errors: results.errors}, () => {
-                        this.props.form.validateFields(['email'], { force: true})
+                        this.props.form.validateFields(['email', 'username'], { force: true})
                     });
                 } else {
                     this.props.history.push('/login')
@@ -58,9 +55,21 @@ class SignUp extends React.Component {
         this.setState({errors});
 
     }
-    _validateEmail = (rule, value, callback) => {
-        if(this.state.errors.email) {
+
+    _onUsernameChange = e => {
+        if(!this.state.errors.username) return;
+        const errors = {...this.state.errors};
+        delete errors.username;
+        this.setState({errors});
+
+    }
+
+    _validateUniqueFields = (rule, value, callback) => {
+        console.log({rule, value})
+        if(rule.field === 'email' && this.state.errors.email) {
             callback(this.state.errors.email);
+        } else if ( rule.field === 'username' && this.state.errors.username){
+            callback(this.state.errors.username)
         } else {
             callback()
         }
@@ -155,9 +164,12 @@ class SignUp extends React.Component {
                                         {
                                             required: true,
                                             message: 'Please input your username!',
+                                        },
+                                        {
+                                            validator: this._validateUniqueFields
                                         }
                                     ]
-                                })(<Input/>)}
+                                })(<Input onChange={this._onUsernameChange}/>)}
                             </Form.Item>
 
                             <Form.Item label='E-mail'>
@@ -172,7 +184,7 @@ class SignUp extends React.Component {
                                             message: 'Invalid e-mail format.'
                                         },
                                         {
-                                            validator: this._validateEmail
+                                            validator: this._validateUniqueFields
                                         }
                                     ]
                                 })(<Input onChange={this._onEmailChange}/>)}

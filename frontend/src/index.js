@@ -4,18 +4,17 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
+import reduxThunk from 'redux-thunk';
 import reducers from './redux/reducers';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-const store = createStore(reducers);
-
 ReactDOM.render(
-    <Provider store={store}>
-        <App />
-    </Provider> , 
+    
+    <App />
+     , 
     document.getElementById('root')
 );
 
