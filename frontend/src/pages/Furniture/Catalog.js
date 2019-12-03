@@ -1,15 +1,26 @@
 import React from 'react';
 import FurnitureItem from '../../components/FurnitureItem'
-import { Row, Col, Layout, Typography, Breadcrumb } from 'antd' 
+import { Row, Col, Layout, Typography, Breadcrumb, Pagination  } from 'antd' 
 import { connect } from 'react-redux';
 import { fetchFurniture } from '../../redux/actions/furniture';
 import { Link } from 'react-router-dom';
 
 const { Title } = Typography;
 class Catalog extends React.Component {
+    state = {
+        currentPage: 1
+    }
+
 
     componentDidMount() {
         this.props.fetchFurniture();
+    }
+
+    _onPageChange = page => {
+
+        this.setState({ currentPage: page});
+        this.props.fetchFurniture(page);
+
     }
 
     _renderItem = (item, index) => {
@@ -26,6 +37,10 @@ class Catalog extends React.Component {
         )
     }
     render() {
+
+        const { pagination, items } = this.props;
+        const totalPages = pagination ? pagination.totalPages : null;
+        console.log({totalPages});
         return (
            
             <Row type="flex" justify="center" style={{flex: 1}}>
@@ -50,7 +65,12 @@ class Catalog extends React.Component {
                             </Col>
                             { this.props.items.map( (item, index) => ( this._renderItem(item, index) ))}
                         </Row>
-                        
+                        <Row type="flex" justify="center" style={{width: '100%'}}>
+                            <Col>
+                                <Pagination Pagination current={this.state.currentPage} onChange={this._onPageChange} defaultPageSize={9} total={pagination.totalItems} />
+                            </Col>
+                            
+                        </Row>
                     </Layout.Content>
                 </Layout>
                 </Col>
@@ -62,7 +82,8 @@ class Catalog extends React.Component {
 
 const mapStateToProps = state => {
     return { 
-        items: state.furniture.items
+        items: state.furniture.items,
+        pagination: state.furniture.pagination
     }
 }
 

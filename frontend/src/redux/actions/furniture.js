@@ -8,14 +8,14 @@ const types = {
     
 }
 
-export const fetchFurniture = () => async (dispatch, getState) => {
+export const fetchFurniture = (page = 1, perPage = 9) => async (dispatch, getState) => {
     try {
         
-        const items = await ResonanceApi.furniture.getAll();
+        const { furniture, pagination } = await ResonanceApi.furniture.getAll(page, perPage);
         
         dispatch({
             type: types.FURNITURE_FETCHED,
-            payload: { items }
+            payload: { furniture, pagination }
         })
         
         // history.push('/');
@@ -33,12 +33,13 @@ export const fetchFurniture = () => async (dispatch, getState) => {
 
 const INITIAL_VALUE = {
     items: [],
+    pagination: {}
 }
 export default (furniture = INITIAL_VALUE, action) => {
 
     switch (action.type) {
         case types.FURNITURE_FETCHED:
-            return { ...furniture, items: action.payload.items}
+            return { ...furniture, items: action.payload.furniture, pagination: action.payload.pagination }
         default:
             return furniture;
     }

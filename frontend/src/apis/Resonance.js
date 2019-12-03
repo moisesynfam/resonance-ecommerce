@@ -31,12 +31,12 @@ export default {
         },
     },
     furniture: {
-        getAll: async () => {
-            const response = await axios.get('/api/furniture');
+        getAll: async (page, perPage) => {
+            const response = await axios.get(`/api/furniture?page=${page}&perPage=${perPage}`);
             const { data } = response;
             if(!data.success) throw new Error(data.message);
 
-            return data.furniture;
+            return data;
         }
     }
 }
