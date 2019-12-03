@@ -29,5 +29,14 @@ export default {
 
             return data.token;
         },
+    },
+    furniture: {
+        getAll: async () => {
+            const response = await axios.get('/api/furniture');
+            const { data } = response;
+            if(!data.success) throw new Error(data.message);
+
+            return data.furniture;
+        }
     }
 }

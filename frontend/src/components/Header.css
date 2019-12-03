@@ -1,6 +1,6 @@
 .ant-layout-header{
     background: white;
-    box-shadow: 0 2px 8px #f0f1f2;
+    box-shadow: 0 2px 8px #0c0c0c25;
     position: relative;
     z-index: 10;
 }

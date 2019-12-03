@@ -73,7 +73,7 @@ class Header extends React.Component {
         return (
             <Layout.Header>
                 <Row type="flex" style={{ height: '100%'}} align="bottom" justify="space-between">
-                    <Col span={4}><Title level={2}>Resonance</Title></Col>
+                    <Col span={4}><Title level={2}><Link to="/">RESONANCE</Link></Title></Col>
                     <Col>
                         <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
                             <Menu.Item key="home">

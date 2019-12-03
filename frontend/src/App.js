@@ -20,6 +20,7 @@ import MyAccount from './pages/User/MyAccount';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import PrivateRoute from './components/PrivateRoute';
+import Catalog from './pages/Furniture/Catalog';
 
 const store = createStore(reducers, applyMiddleware(reduxThunk));
 
@@ -46,13 +47,14 @@ function App() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <Layout className="App" style={{ background: '#fff'}}>
+        <Layout className="App" style={{display: 'flex', flexDirection: 'column'}}>
           <Header/>
-          <Layout.Content style={{ height: '100%', width: '100%'}} >
+          <Layout.Content style={{width: '100%', display: 'flex', flexDirection: 'column'}} >
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/signUp" exact component={SignUp} />
               <Route path="/login" exact component={Login} />
+              <Route path="/catalog" exact component={Catalog} />
               <PrivateRoute path="/myAccount" exact component={MyAccount} />
 
               <Route path="*" component={Home}/>

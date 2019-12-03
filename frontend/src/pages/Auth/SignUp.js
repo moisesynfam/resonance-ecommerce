@@ -65,7 +65,6 @@ class SignUp extends React.Component {
     }
 
     _validateUniqueFields = (rule, value, callback) => {
-        console.log({rule, value})
         if(rule.field === 'email' && this.state.errors.email) {
             callback(this.state.errors.email);
         } else if ( rule.field === 'username' && this.state.errors.username){
