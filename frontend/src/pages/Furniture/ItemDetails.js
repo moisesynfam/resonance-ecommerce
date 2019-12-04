@@ -8,7 +8,9 @@ import "react-image-gallery/styles/css/image-gallery.css";
 import ImageGallery from 'react-image-gallery';
 import ItemDetailHeader from '../../components/ItemDetailHeader';
 import PriceTag from '../../components/PriceTag';
+import Linkify from 'react-linkify';
 import _ from 'lodash';
+import EmailItemButton from '../../components/EmailItemButton';
 
 
 const { Title, Paragraph, Text } = Typography;
@@ -82,7 +84,7 @@ class ItemDetails extends React.Component {
             );
         }
 
-        const { fields,  fields: { Name, Description, Picture, Type } } = this.props.currentItem;
+        const { fields,  fields: { Name, Description, Picture, Type }, id } = this.props.currentItem;
         // const { fields,  fields: { Name, Description, Picture, Type } } = item;
         return (
             <>
@@ -100,7 +102,10 @@ class ItemDetails extends React.Component {
                 <Divider/>
                 <Row gutter={[24, 16]}>
                     <Col xs={24}>
-                    <Button type="primary" shape="round" icon="mail"  > Send to your email</Button>
+                        <EmailItemButton
+                            itemName={Name}
+                            itemId={id}
+                        />
                     </Col>
                     <Col xs={24} sm={24} md={9}>
                         
@@ -134,7 +139,7 @@ class ItemDetails extends React.Component {
                     <Col xs={24}>
                         <Divider/>
                         <Title level={4}>Item Description</Title>
-                        <Paragraph style={{ fontSize: 16}} type="secondary" >{Description}</Paragraph>
+                        <Paragraph style={{ fontSize: 16}} type="secondary" ><Linkify>{Description.replace(/\n/g, "\n")}</Linkify></Paragraph>
                     </Col>
                     <Col xs={24}>
                         <Divider/>

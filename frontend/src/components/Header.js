@@ -78,24 +78,32 @@ class Header extends React.Component {
                     <Col span={4}><Title level={2}><Link to="/">RESONANCE</Link></Title></Col>
                     <Col>
                         <ResponsiveAntMenu 
+                            mobileBreakPoint={768}
                             activeLinkKey={this.state.currentPage}
                             mobileMenuContent={
                                 isMenuShown => isMenuShown ? <Button type="link" icon="close-circle" /> : <Button type="link" icon="menu" />
                             }
                         >
-                        {(onLinkClick) =>
-                            <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
-                                <Menu.Item key="home">
-                                    <Link to="/">
-                                        <Icon type="home" />
-                                        Home
-                                    </Link>
-                                
-                                </Menu.Item>
-                                
-                                { this._getAuthLinks().map( link => (link))}
-                            </Menu>
-                        }
+                            {(onLinkClick) =>
+                                <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
+                                    <Menu.Item key="home">
+                                        <Link to="/">
+                                            <Icon type="home" />
+                                            Home
+                                        </Link>
+                                    
+                                    </Menu.Item>
+                                    <Menu.Item key="catalog">
+                                        <Link to="/catalog">
+                                            <Icon type="shopping" />
+                                            Catalog
+                                        </Link>
+                                    
+                                    </Menu.Item>
+                                    
+                                    { this._getAuthLinks().map( link => (link))}
+                                </Menu>
+                            }
                         </ResponsiveAntMenu>
                       
                     </Col>

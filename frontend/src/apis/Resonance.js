@@ -45,6 +45,17 @@ export default {
             if(!data.success) throw new Error(data.message);
 
             return data.item;
+        },
+        //since this call won't be used by actions, we're going to handle errors here
+        emailItem: async (itemId) => {
+            try {
+                const response = await axios.get(`/api/furniture/emailItem?itemId=${itemId}`);
+                return response.data;
+            } catch ( err ) {
+                console.log('Error sending email', err);
+                return {success: false, message: err.message};
+            }
+           
         }
     },
     vendors: {
@@ -62,5 +73,6 @@ export default {
 
             return data.vendor;
         }
-    }
+    },
+
 }

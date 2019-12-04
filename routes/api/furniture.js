@@ -1,7 +1,9 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../config/airtable');
-const _ = require('lodash');
+const passport = require('passport');
+const { formatItemForMail } = require('../../utils');
+const mailer = require('../../mailer');
 
 router.get('/', (req, res) => {
 
@@ -43,6 +45,19 @@ router.get('/', (req, res) => {
 
 });
 
+router.get('/emailItem', passport.authenticate('jwt', { session: false}), (req, res) => {
+    if(!req.query.itemId) return res.status(400).json({ success: false, message: 'Missing item ID.'});
+    db('Furniture').find( req.query.itemId, (err, record) => {
+        if(err){
+            console.error(err)
+            return res.status(500).send();
+        } 
+        const user = req.user;
+        mailer.sendItemMail(user.email, user.firstName, formatItemForMail(record._rawJson));
+        res.json({success: 'true', message: 'E-mail sent!'})
+    })
+})
+
 router.get('/:id', (req, res) => {
 
     const { id } = req.params;
@@ -52,5 +67,6 @@ router.get('/:id', (req, res) => {
 
     })
 })
+
 
 module.exports = router;

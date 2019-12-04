@@ -113,7 +113,8 @@ router.post('/login', (req, res) => {
                 username: user.get('username'),
                 id: user.getId(),
                 firstName: user.get('First Name'),
-                lastName: user.get('Last Name')
+                lastName: user.get('Last Name'),
+                email: user.get('email')
             };
             jwt.sign( jwtPaylod, keys.JWT_SECRET_KEY,{
                 expiresIn: 3600

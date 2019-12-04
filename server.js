@@ -3,7 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
+// const mailer = require('./mailer');
 
+// mailer.sendTest();
 const app = express();
 
 //middleware

@@ -11,8 +11,15 @@ module.exports = passport => {
   passport.use(
     new JwtStrategy(opts, (jwt_payload, done) => {
       db("Users").find(jwt_payload.id, (err, record) => {
-          if(record)
-            return done(null, user);
+          if(record){
+            return done(null, {
+              firstName: record.get('First Name'),
+              lastName: record.get('Last Name'),
+              username: record.get('username'),
+              email: record.get('email'),
+            });
+          }
+            
         return done(null, false);
       });
     
