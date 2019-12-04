@@ -29,10 +29,12 @@ class Catalog extends React.Component {
 
         return (
             <Col xs={24}  md={12} lg={8} style={{justifyContent: 'center'}} key={item.id}>
-                                        
-                <Row type="flex" align="middle" justify="center">
-                    <FurnitureItem item={item}/>
-                </Row>
+                <Link to={"/catalog/" + item.id }>
+                    <Row type="flex" align="middle" justify="center">
+                        <FurnitureItem item={item}/>
+                    </Row>
+                </Link>
+                
             </Col>
         )
     }

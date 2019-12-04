@@ -1528,6 +1528,11 @@ resolve@^1.10.0:
   dependencies:
     path-parse "^1.0.6"
 
+responsive-ant-menu@^1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/responsive-ant-menu/-/responsive-ant-menu-1.0.10.tgz#ce05226bec1e64d49dd21e10d7263e3d6dd5d5f1"
+  integrity sha512-bkPRpL/RL+WHewG0XKn2iGzBphtOMUFOR11hlZwc3NWrgMvMGHP6g8BqO1MTK4vUcbMtaxP4dC3vaIX3NzlJhg==
+
 rxjs@^6.5.2:
   version "6.5.3"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.5.3.tgz#510e26317f4db91a7eb1de77d9dd9ba0a4899a3a"

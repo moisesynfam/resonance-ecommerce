@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../../config/airtable');
-
+const _ = require('lodash');
 
 router.get('/', (req, res) => {
 
@@ -42,5 +42,15 @@ router.get('/', (req, res) => {
     })
 
 });
+
+router.get('/:id', (req, res) => {
+
+    const { id } = req.params;
+    db('Furniture').find(id, (err, record) => {
+        if(err) throw err;
+        res.json({ success: true, item: record._rawJson});
+
+    })
+})
 
 module.exports = router;

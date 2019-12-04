@@ -1,6 +1,8 @@
 import React from 'react';
 import './Header.css';
-import { Layout, Menu, Breadcrumb, Typography, Row, Col, Icon  } from 'antd';
+import { Layout, Menu, Button, Typography, Row, Col, Icon  } from 'antd';
+import ResponsiveAntMenu from 'responsive-ant-menu'
+
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -75,17 +77,27 @@ class Header extends React.Component {
                 <Row type="flex" style={{ height: '100%'}} align="bottom" justify="space-between">
                     <Col span={4}><Title level={2}><Link to="/">RESONANCE</Link></Title></Col>
                     <Col>
-                        <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
-                            <Menu.Item key="home">
-                                <Link to="/">
-                                    <Icon type="home" />
-                                    Home
-                                </Link>
-                               
-                            </Menu.Item>
-                            
-                            { this._getAuthLinks().map( link => (link))}
-                        </Menu>
+                        <ResponsiveAntMenu 
+                            activeLinkKey={this.state.currentPage}
+                            mobileMenuContent={
+                                isMenuShown => isMenuShown ? <Button type="link" icon="close-circle" /> : <Button type="link" icon="menu" />
+                            }
+                        >
+                        {(onLinkClick) =>
+                            <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
+                                <Menu.Item key="home">
+                                    <Link to="/">
+                                        <Icon type="home" />
+                                        Home
+                                    </Link>
+                                
+                                </Menu.Item>
+                                
+                                { this._getAuthLinks().map( link => (link))}
+                            </Menu>
+                        }
+                        </ResponsiveAntMenu>
+                      
                     </Col>
                 </Row>
                 

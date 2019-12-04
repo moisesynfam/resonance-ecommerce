@@ -4,10 +4,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 const passportConfig = require('./config/passport');
 
-
-const UserRoutes = require('./routes/api/users');
-const FurnitureRoutes = require('./routes/api/furniture');
-
 const app = express();
 
 //middleware
@@ -19,8 +15,9 @@ app.use(passport.initialize());
 passportConfig(passport);
 
 //Routes
-app.use('/api/users', UserRoutes);
-app.use('/api/furniture', FurnitureRoutes);
+app.use('/api/users', require('./routes/api/users'));
+app.use('/api/furniture', require('./routes/api/furniture'));
+app.use('/api/vendors', require('./routes/api/vendors'));
 
 const port = process.env.PORT || 5000;
 

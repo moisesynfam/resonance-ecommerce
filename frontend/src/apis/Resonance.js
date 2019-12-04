@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+
 axios.defaults.validateStatus = (status) => {
     return status < 500;
 }
@@ -37,6 +38,29 @@ export default {
             if(!data.success) throw new Error(data.message);
 
             return data;
+        },
+        getItem: async (itemId) => {
+            const response = await axios.get(`/api/furniture/${itemId}`);
+            const { data } = response;
+            if(!data.success) throw new Error(data.message);
+
+            return data.item;
+        }
+    },
+    vendors: {
+        getAll: async (page, perPage) => {
+            const response = await axios.get(`/api/vendors`);
+            const { data } = response;
+            if(!data.success) throw new Error(data.message);
+
+            return data.vendors;
+        },
+        getItem: async (vendorId) => {
+            const response = await axios.get(`/api/vendors/${vendorId}`);
+            const { data } = response;
+            if(!data.success) throw new Error(data.message);
+
+            return data.vendor;
         }
     }
 }

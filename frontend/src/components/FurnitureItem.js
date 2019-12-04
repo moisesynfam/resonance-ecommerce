@@ -1,6 +1,7 @@
 import React from 'react';
 import item from './item';
 import { Card, Typography, Tag } from 'antd';
+import PriceTag from './PriceTag';
 
 const { Text } = Typography;
 class FurnitureItem extends React.Component {
@@ -28,10 +29,10 @@ class FurnitureItem extends React.Component {
                 cover={<img alt={item.fields.Name} src={coverImage.url} style={{ height: 200, objectFit: this._getImageStragedy(dimensions)}}/>}
             >   <Card.Meta title={title}/>
                 <br/>
-                <Text>
-                    ${item.fields["Unit Cost"]}
-                    <br/>
-                </Text>
+                <PriceTag
+                    price={item.fields["Unit Cost"]}
+                /> 
+                <br/>
                 <Tag>{ item.fields["Units In Store"] > 0 ? "Avaliable" : "Out of stock"}</Tag>
             </Card>
         )
