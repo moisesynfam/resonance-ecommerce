@@ -1,4 +1,26 @@
 .home-page {
-   
+    /* filter: blur(3px);
+    -webkit-filter: blur(3px); */
+  
+    /* height: 100hv;
+    width: 100%; */
+    
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://hnsfpau.imgix.net/5/images/detailed/68/MonteCarlo-5S-Corner-Lounge-Suite.jpg?fit=fill&bg=0FFF&w=1920&h=1080&auto=format,compress");
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    
+}
+
+.home-page {
     height: 100%;
+    /* background: transparent; */
+}
+.text-center {
+    text-align: center;
+}
+.text-white {
+    color: white !important;
 }

@@ -5,7 +5,8 @@ import {
     Row,
     Col,
     Button,
-    Typography
+    Typography,
+    Card
 } from "antd";
 
 import { connect } from 'react-redux';
@@ -101,11 +102,15 @@ class SignUp extends React.Component {
         const formItemLayout = {
             labelCol: {
               xs: { span: 24 },
-              sm: { span: 6 },
+              sm: { span: 24 },
+              md: { span: 8 },
+              lg: { span: 8 }
             },
             wrapperCol: {
               xs: { span: 24 },
-              sm: { span: 18 },
+              sm: { span: 24 },
+              md: { span: 14 },
+              lg: { span: 16 }
             },
         };
 
@@ -116,112 +121,129 @@ class SignUp extends React.Component {
                 offset: 0,
               },
               sm: {
-                span: 18,
-                offset: 6,
+                span: 24,
+                offset: 0,
+              },
+              md: {
+                span: 14,
+                offset: 8,
+              },
+              lg: {
+                span: 16,
+                offset: 8,
               },
             },
           };
 
         return (
-            <div className="page-container">
-                
-                <Row type="flex" justify="center">
-                    <Col span={24} >
-                        <Row type="flex" justify="center">
-                            <Title>Sign Up</Title>
-                        </Row>
-                       
-                    </Col>
-                    <Col xs={20} sm={20} md={10} >
-                        
-                        <Form onSubmit={this._onSubmit} {...formItemLayout}>
-                            <Form.Item label='Name'>
-                                {getFieldDecorator('firstName',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please input your name!',
-                                        }
-                                    ]
-                                })(<Input/>)}
-                            </Form.Item>
+            <div className="page-container" style={{ 
+                background: '#ffccbc', 
+                flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                    <Row type="flex" align="middle" justify="center">
+                        <Col xs={22} sm={22} md={16} lg={16} xl={12}>
+                            <Card style={{ boxShadow: '0 7px 20px #0c0c0c59'}}>
+                                <Row type="flex" justify="center">
+                                    <Col span={24} >
+                                        <Row type="flex" justify="center">
+                                            <Title>Sign Up</Title>
+                                        </Row>
+                                    
+                                    </Col>
+                                    <Col xs={22} sm={22} md={20} lg={16} xl={14}>
+                                        
+                                        <Form onSubmit={this._onSubmit} layout="vertical">
+                                            <Form.Item label='Name'>
+                                                {getFieldDecorator('firstName',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please input your name!',
+                                                        }
+                                                    ]
+                                                })(<Input/>)}
+                                            </Form.Item>
 
-                            <Form.Item label='Last Name'>
-                                {getFieldDecorator('lastName',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please input your last name!',
-                                        }
-                                    ]
-                                })(<Input/>)}
-                            </Form.Item>
+                                            <Form.Item label='Last Name'>
+                                                {getFieldDecorator('lastName',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please input your last name!',
+                                                        }
+                                                    ]
+                                                })(<Input/>)}
+                                            </Form.Item>
 
-                            <Form.Item label='Username'>
-                                {getFieldDecorator('username',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please input your username!',
-                                        },
-                                        {
-                                            validator: this._validateUniqueFields
-                                        }
-                                    ]
-                                })(<Input onChange={this._onUsernameChange}/>)}
-                            </Form.Item>
+                                            <Form.Item label='Username'>
+                                                {getFieldDecorator('username',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please input your username!',
+                                                        },
+                                                        {
+                                                            validator: this._validateUniqueFields
+                                                        }
+                                                    ]
+                                                })(<Input onChange={this._onUsernameChange}/>)}
+                                            </Form.Item>
 
-                            <Form.Item label='E-mail'>
-                                {getFieldDecorator('email',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please input your last email!',
-                                        },
-                                        {
-                                            type: 'email',
-                                            message: 'Invalid e-mail format.'
-                                        },
-                                        {
-                                            validator: this._validateUniqueFields
-                                        }
-                                    ]
-                                })(<Input onChange={this._onEmailChange}/>)}
-                            </Form.Item>
-                            <Form.Item label='Password'>
-                                {getFieldDecorator('password',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please input your password!',
-                                        },
-                                        {
-                                            validator: this._validateToNextPassword
-                                        }
-                                    ]
-                                })(<Input.Password/>)}
-                            </Form.Item>
+                                            <Form.Item label='E-mail'>
+                                                {getFieldDecorator('email',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please input your last email!',
+                                                        },
+                                                        {
+                                                            type: 'email',
+                                                            message: 'Invalid e-mail format.'
+                                                        },
+                                                        {
+                                                            validator: this._validateUniqueFields
+                                                        }
+                                                    ]
+                                                })(<Input onChange={this._onEmailChange}/>)}
+                                            </Form.Item>
+                                            <Form.Item label='Password'>
+                                                {getFieldDecorator('password',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please input your password!',
+                                                        },
+                                                        {
+                                                            validator: this._validateToNextPassword
+                                                        }
+                                                    ]
+                                                })(<Input.Password/>)}
+                                            </Form.Item>
 
-                            <Form.Item label='Confirm password'>
-                                {getFieldDecorator('password2',{
-                                    rules: [
-                                        {
-                                            required: true,
-                                            message: 'Please confirm your password!',
-                                        },
-                                        {
-                                            validator: this._compareToFirstPassword
-                                        }
-                                    ]
-                                })(<Input.Password onBlur={this._handlePassword2Blur}/>)}
-                            </Form.Item>
-                            <Form.Item {...submitButtonLayout}>
-                                <Button htmlType="submit">Register</Button>
-                            </Form.Item>
-                        </Form>
-                        
-                    </Col>
-                </Row>
+                                            <Form.Item label='Confirm password'>
+                                                {getFieldDecorator('password2',{
+                                                    rules: [
+                                                        {
+                                                            required: true,
+                                                            message: 'Please confirm your password!',
+                                                        },
+                                                        {
+                                                            validator: this._compareToFirstPassword
+                                                        }
+                                                    ]
+                                                })(<Input.Password onBlur={this._handlePassword2Blur}/>)}
+                                            </Form.Item>
+                                            <Form.Item >
+                                                <Button htmlType="submit">Register</Button>
+                                            </Form.Item>
+                                        </Form>
+                                        
+                                    </Col>
+                                </Row>
+
+                            </Card>
+
+                        </Col>
+                    </Row>
             </div>
         )
     }

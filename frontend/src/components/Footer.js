@@ -6,8 +6,8 @@ class Footer extends React.Component {
 
     render() {
         return (
-            <Layout.Footer>
-                Ant Design ©2018 Created by Ant UED
+            <Layout.Footer >
+                RESONANCE E-Commerce ©2019 Created by Moises Ynfante
                 
             </Layout.Footer>
         );

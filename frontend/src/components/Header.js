@@ -75,9 +75,10 @@ class Header extends React.Component {
         return (
             <Layout.Header>
                 <Row type="flex" style={{ height: '100%'}} align="bottom" justify="space-between">
-                    <Col span={4}><Title level={2}><Link to="/">RESONANCE</Link></Title></Col>
+                    <Col span={4}><Title level={2} ><Link className="header-logo" to="/" >RESONANCE</Link></Title></Col>
                     <Col>
                         <ResponsiveAntMenu 
+                            theme={ () => 'dark'}
                             mobileBreakPoint={768}
                             activeLinkKey={this.state.currentPage}
                             mobileMenuContent={
@@ -85,7 +86,7 @@ class Header extends React.Component {
                             }
                         >
                             {(onLinkClick) =>
-                                <Menu mode="horizontal" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
+                                <Menu mode="horizontal" theme="dark" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
                                     <Menu.Item key="home">
                                         <Link to="/">
                                             <Icon type="home" />
