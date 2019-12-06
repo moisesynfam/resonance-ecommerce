@@ -13,16 +13,40 @@ const { Title } = Typography;
 
 class Header extends React.Component {
 
-    state= {
-        currentPage:"home",
+   
+
+    constructor(props) {
+        super(props);
+        this.state = { width: window.innerWidth};
+        
+        // this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+      }
+      
+      componentDidMount() {
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+      }
+      
+      componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+      }
+      
+      updateWindowDimensions = () => {
+        this.setState({ width: window.innerWidth });
+        // console.log({ width: window.innerWidth, height: window.innerHeight })
+      }
+
+    _determineRoute = () => {
+        if(this.props.location.pathname.includes('/catalog')) return '/catalog';
+
+        return this.props.location.pathname;
     }
 
     _handleNavbarClick = (e) => {
         const key = e.key;
-        this.setState({ currentPage: key });
         if(key === 'log-out') {
             this.props.logoutUser();
-            // this.props.history.push('/')
+            this.props.history.push('/')
         }
 
     }
@@ -31,27 +55,39 @@ class Header extends React.Component {
         const links = [];
 
         if(this.props.auth.isAuthenticated) {
-            links.push(          
-                <Menu.Item key="log-out">
-                    <Link to="/">
-                        <Icon type="logout" />
-                        Log out
-                    </Link>
-                </Menu.Item>
-            );
+            // links.push(          
+            //     <Menu.Item key="log-out">
+            //         <Link to="/">
+            //             <Icon type="logout" />
+            //             Log out
+            //         </Link>
+            //     </Menu.Item>
+            // );
 
             links.push(          
-                <Menu.Item key="my-account">
-                    <Link to="/myAccount">
+                <Menu.SubMenu
+                    key="/user"
+                    title={
+                        <span className="submenu-title-wrapper">
                         <Icon type="user" />
-                        My Account
-                    </Link>
-                </Menu.Item>
+                        Hi, { this.props.auth.user.firstName }
+                        </span>
+                    }
+                    >
+                    <Menu.ItemGroup>
+                        <Menu.Item key="log-out">
+                            
+                            Log Out
+                           
+                        </Menu.Item> 
+                    </Menu.ItemGroup>
+                    
+                </Menu.SubMenu>
             );
 
         } else {
             links.push( 
-                <Menu.Item key="log-in">
+                <Menu.Item key="/login">
                     <Link to="/login">
                         <Icon type="user" />
                         Log in
@@ -59,7 +95,7 @@ class Header extends React.Component {
                 </Menu.Item>
             );
             links.push(
-                <Menu.Item key="sign-up">
+                <Menu.Item key="/signup">
                     <Link to="/signUP">
                         <Icon type="mail" />
                         Sign Up
@@ -78,23 +114,24 @@ class Header extends React.Component {
                     <Col span={4}><Title level={2} ><Link className="header-logo" to="/" >RESONANCE</Link></Title></Col>
                     <Col>
                         <ResponsiveAntMenu 
+                            mode={this.state.width < 768? "vertical" : 'horizontal'}
                             theme={ () => 'dark'}
                             mobileBreakPoint={768}
-                            activeLinkKey={this.state.currentPage}
+                            activeLinkKey={this._determineRoute()}
                             mobileMenuContent={
                                 isMenuShown => isMenuShown ? <Button type="link" icon="close-circle" /> : <Button type="link" icon="menu" />
                             }
                         >
                             {(onLinkClick) =>
-                                <Menu mode="horizontal" theme="dark" selectedKeys={[this.state.currentPage]} onClick={this._handleNavbarClick}>
-                                    <Menu.Item key="home">
+                                <Menu mode="horizontal" theme="dark" selectedKeys={[this._determineRoute()]} onClick={this._handleNavbarClick}>
+                                    <Menu.Item key="/">
                                         <Link to="/">
                                             <Icon type="home" />
                                             Home
                                         </Link>
                                     
                                     </Menu.Item>
-                                    <Menu.Item key="catalog">
+                                    <Menu.Item key="/catalog">
                                         <Link to="/catalog">
                                             <Icon type="shopping" />
                                             Catalog

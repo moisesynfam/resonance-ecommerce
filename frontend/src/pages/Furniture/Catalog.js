@@ -5,10 +5,8 @@ import { connect } from 'react-redux';
 import { fetchFurniture, changeQuery } from '../../redux/actions/furniture';
 import { Link } from 'react-router-dom';
 import mColors from '../../apis/MaterialsColors';
-import ColorSelect from '../../components/ColorSelect';
-import ColorCheckableTags from '../../components/ColorCheckableTags';
-import { CirclePicker } from 'react-color';
 import CatalogFilter from '../../components/CatalogFilter';
+import { CSSTransition } from 'react-transition-group';
 
 const colorKeys = Object.keys(mColors);
 
@@ -85,6 +83,7 @@ class Catalog extends React.Component {
                             <Col span={24}>
                                 <Title>Our Catalog</Title>
                             </Col>
+                            
                             { this.props.items.map( (item, index) => ( this._renderItem(item, index) ))}
                         </Row>
                         <Row type="flex" justify="center" style={{width: '100%'}}>
