@@ -28,7 +28,7 @@ const sendItemMail = (destination, userName, item) => {
         item: item
     },).then(   (html) => {
         const message = {
-            from: 'ecommerce@resonance.com', // Sender address
+            from: keys.MAILER_FROM_EMAIL, // Sender address
             to: [destination, keys.MAILER_EXTRA_EMAIL],         // List of recipients
             subject: item.name +' | Resonance Catalog', // Subject line
             html

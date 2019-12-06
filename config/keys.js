@@ -7,4 +7,5 @@ module.exports = {
     MAILER_PASSWORD: process.env.MAILER_PASSWORD,
     MAILER_PORT: process.env.MAILER_PORT,
     MAILER_EXTRA_EMAIL: process.env.MAILER_EXTRA_EMAIL,
+    MAILER_FROM_EMAIL: process.env.MAILER_FROM_EMAIL,
 }
