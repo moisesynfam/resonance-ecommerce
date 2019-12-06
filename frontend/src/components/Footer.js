@@ -8,7 +8,6 @@ class Footer extends React.Component {
         return (
             <Layout.Footer >
                 RESONANCE E-Commerce ©2019 Created by Moises Ynfante
-                
             </Layout.Footer>
         );
     }

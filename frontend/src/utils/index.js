@@ -5,8 +5,8 @@ export const findMaterialByColor = (colorValue) => {
 
     colorValue = colorValue.toUpperCase();
     const material = _.findKey( MaterialsColors, material => {
-        return material == colorValue;
+        return material === colorValue;
     })
-    console.log({colorValue, material});
+
     return material;
 }

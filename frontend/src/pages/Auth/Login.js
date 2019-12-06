@@ -17,13 +17,13 @@ class Login extends React.Component {
         e.preventDefault();
         this.props.form.validateFieldsAndScroll( async (err, values) => {
             if(!err) {
-                console.log("Login form values", values);
+                // console.log("Login form values", values);
                 const results = await this.props.loginUser(values, this.props.history);
 
                 if(!results.success) {
                     message.error(results.message);
                 } else {
-                    this.props.history.push('/')
+                    this.props.history.push('/catalog')
                 }
             }
 
@@ -79,17 +79,15 @@ class Login extends React.Component {
                                         </Form.Item>
                                     </Form>
 
-
                                 </Col>
                             </Row>
-                            
-                       
                         </Card>
                     </Col>
                     <Col xs={0} sm={0} md={12} lg={16} >
                         <div style={{ height: '100%', display: 'flex', flexDirection:"column"}}>
                             <img 
                                 style={{ objectFit: 'cover', flex: 1}}
+                                alt="showcase"
                                 src="https://cdn.shopify.com/s/files/1/1890/8745/files/retro_style_wooden_furniture_range_1400x.progressive.jpg?v=1553786123"
                             />
                         </div>

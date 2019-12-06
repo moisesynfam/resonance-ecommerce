@@ -15,6 +15,9 @@ const ColorCheckableTag = ({name, type, onChange}) => {
         case 'types': 
             Colors = TColors;
             break;
+        default:
+            Colors = MColors;
+            break;
       
     }
     const color = chroma( Colors[name]);

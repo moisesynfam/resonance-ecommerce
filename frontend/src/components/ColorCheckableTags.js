@@ -1,5 +1,4 @@
 import React from 'react';
-import { Tag } from 'antd';
 import ColorCheckableTag from './ColorCheckableTag';
 import MColors from '../apis/MaterialsColors';
 import SColors from '../apis/SettingsColors';
@@ -31,9 +30,8 @@ class ColorCheckableTags  extends React.Component {
     _onTagChange = (tag, checked) => {
         const { checkedTags } = this.state;
         const newCheckedTags = checked ? [...checkedTags, tag] : checkedTags.filter(t => t !== tag);
-        console.log('You are interested in: ', newCheckedTags);
         this.setState({ checkedTags: newCheckedTags });
-        // this.props.onTagChange(newCheckedTags);
+
     }
     render() {
 

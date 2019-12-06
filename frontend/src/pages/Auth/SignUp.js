@@ -99,41 +99,6 @@ class SignUp extends React.Component {
     render() {
 
         const { getFieldDecorator } = this.props.form;
-        const formItemLayout = {
-            labelCol: {
-              xs: { span: 24 },
-              sm: { span: 24 },
-              md: { span: 8 },
-              lg: { span: 8 }
-            },
-            wrapperCol: {
-              xs: { span: 24 },
-              sm: { span: 24 },
-              md: { span: 14 },
-              lg: { span: 16 }
-            },
-        };
-
-        const submitButtonLayout = {
-            wrapperCol: {
-              xs: {
-                span: 24,
-                offset: 0,
-              },
-              sm: {
-                span: 24,
-                offset: 0,
-              },
-              md: {
-                span: 14,
-                offset: 8,
-              },
-              lg: {
-                span: 16,
-                offset: 8,
-              },
-            },
-          };
 
         return (
             <div className="page-container" style={{ 

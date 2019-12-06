@@ -1,9 +1,8 @@
 import React from 'react';
 import item from './item';
-import { Card, Typography, Tag } from 'antd';
+import { Card, Tag } from 'antd';
 import PriceTag from './PriceTag';
 
-const { Text } = Typography;
 class FurnitureItem extends React.Component {
 
 

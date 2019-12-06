@@ -4,11 +4,8 @@ import { Row, Col, Layout, Typography, Breadcrumb, Pagination } from 'antd'
 import { connect } from 'react-redux';
 import { fetchFurniture, changeQuery } from '../../redux/actions/furniture';
 import { Link } from 'react-router-dom';
-import mColors from '../../apis/MaterialsColors';
 import CatalogFilter from '../../components/CatalogFilter';
-import { CSSTransition } from 'react-transition-group';
 
-const colorKeys = Object.keys(mColors);
 
 const { Title } = Typography;
 class Catalog extends React.Component {
@@ -16,11 +13,10 @@ class Catalog extends React.Component {
         currentPage: 1
     }
 
-
     componentDidMount() {
         this.props.fetchFurniture();
         if( this.props.pagination.currentPage 
-            && this.props.pagination.currentPage != this.state.currentPage) 
+            && this.props.pagination.currentPage !== this.state.currentPage) 
             this.setState({currentPage: this.props.pagination.currentPage});
     }
 
@@ -36,7 +32,7 @@ class Catalog extends React.Component {
 
     }
 
-    _renderItem = (item, index) => {
+    _renderItem = (item) => {
 
         if(!item.fields.Picture) return null;
 
@@ -51,49 +47,44 @@ class Catalog extends React.Component {
             </Col>
         )
     }
+
     render() {
 
-        const { pagination, items } = this.props;
-        const totalPages = pagination ? pagination.totalPages : null;
-        console.log({totalPages});
+        const { pagination } = this.props;
+        
         return (
-           
             <Row type="flex" justify="center" style={{flex: 1}}>
                 <Col xs={24} sm={22} md={18} style={{display: 'flex'}}>
-                <Layout className="Catalog-page">
-                    <Layout.Sider 
-                        breakpoint="md"
-                        collapsedWidth="0"
-                        width={275}
-                        theme='light'
-                    >
-                       {/* <ColorSelect/> */}
-                       <CatalogFilter 
-                       
-                       />
-                      
-                      
-                    </Layout.Sider>
-                    <Layout.Content style={{background: 'white', padding: '30px 20px'}}>
-                        <Breadcrumb>
-                            <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
-                            <Breadcrumb.Item>Catalog</Breadcrumb.Item>
-                        </Breadcrumb>
-                        <Row gutter={[10, 16]}>
-                            <Col span={24}>
-                                <Title>Our Catalog</Title>
-                            </Col>
-                            
-                            { this.props.items.map( (item, index) => ( this._renderItem(item, index) ))}
-                        </Row>
-                        <Row type="flex" justify="center" style={{width: '100%'}}>
-                            <Col>
-                                <Pagination Pagination current={this.state.currentPage} onChange={this._onPageChange} defaultPageSize={9} total={pagination.totalItems} />
-                            </Col>
-                            
-                        </Row>
-                    </Layout.Content>
-                </Layout>
+                    <Layout className="Catalog-page">
+                        <Layout.Sider 
+                            breakpoint="md"
+                            collapsedWidth="0"
+                            width={275}
+                            theme='light'
+                        >
+                            <CatalogFilter/>
+                        </Layout.Sider>
+
+                        <Layout.Content style={{background: 'white', padding: '30px 20px'}}>
+                            <Breadcrumb>
+                                <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+                                <Breadcrumb.Item>Catalog</Breadcrumb.Item>
+                            </Breadcrumb>
+
+                            <Row gutter={[10, 16]}>
+                                <Col span={24}>
+                                    <Title>Our Catalog</Title>
+                                </Col>
+                                { this.props.items.map( (item, index) => ( this._renderItem(item, index) ))}
+                            </Row>
+
+                            <Row type="flex" justify="center" style={{width: '100%'}}>
+                                <Col>
+                                    <Pagination Pagination current={this.state.currentPage} onChange={this._onPageChange} defaultPageSize={9} total={pagination.totalItems} />
+                                </Col>
+                            </Row>
+                        </Layout.Content>
+                    </Layout>
                 </Col>
             </Row>           
         );

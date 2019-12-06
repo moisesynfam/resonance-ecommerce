@@ -1,9 +1,8 @@
 import React from 'react';
-import { Row, Col, Layout, Typography, Breadcrumb, Skeleton, Divider, Descriptions  } from 'antd' 
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import { Typography } from 'antd' 
 
-const { Title, Paragraph, Text } = Typography;
+
+const { Title } = Typography;
 const ItemDetailHeader = ({vendor, name, style, className}) => {
     let vendorLogo = {};
     let vendorName;
@@ -15,7 +14,7 @@ const ItemDetailHeader = ({vendor, name, style, className}) => {
     }
     return (
         <div style={style} className={"" + className}>
-            <a href={vendorLink} target="_blank"><img src={vendorLogo.url} style={{ maxHeight: '50px'}}/></a>
+            <a href={vendorLink} target="_blank" rel="noopener noreferrer"><img src={vendorLogo.url} style={{ maxHeight: '50px'}}/></a>
             <Title>{ vendorName } {name}</Title>
         </div>
     )

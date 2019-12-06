@@ -1,10 +1,15 @@
 import React from 'react';
 import { Button, notification, Icon } from 'antd';
+import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import ResonanceApi from '../apis/Resonance';
 
 const NOTIFICATION_KEY = 'EMAIL_NOTIFICATION'
-const onButtonClick = async (itemId, itemName) => {
+const onButtonClick = async (itemId, itemName, isAuthenticated, history) => {
+    if(!isAuthenticated) {
+        history.push('/login');
+        return;
+    }
     notification.open({
         key: itemId+"-"+NOTIFICATION_KEY,
         message: 'Sending Item: ' + itemName,
@@ -31,17 +36,17 @@ const onButtonClick = async (itemId, itemName) => {
     })
     
 }
-const EmailItemButton = ({ itemId, isAuthenticated, itemName }) => {
-    if(!isAuthenticated) return null;
+const EmailItemButton = ({ itemId, isAuthenticated, itemName, history }) => {
+   
     return (
-        <Button type="primary" shape="round" icon="mail" onClick={ () => onButtonClick(itemId, itemName)}> Send to your email</Button>
+        <Button type="primary" shape="round" icon="mail" onClick={ () => onButtonClick(itemId, itemName, isAuthenticated, history)}> Send to your email</Button>
     )
 }
 
-const mapStateToProps = state => {
-
+const mapStateToProps = (state, props) => {
+    
     return {
         isAuthenticated: state.auth.isAuthenticated
     }
 }
-export default  connect(mapStateToProps)(EmailItemButton);
+export default  connect(mapStateToProps)(withRouter(EmailItemButton));

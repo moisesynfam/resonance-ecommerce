@@ -1,7 +1,6 @@
 import React from 'react';
 import { Menu, Icon, Radio, Typography, Divider  } from 'antd';
 import { connect } from 'react-redux';
-import ColorCheckableTag from './ColorCheckableTag';
 import MColors from '../apis/MaterialsColors';
 import SColors from '../apis/SettingsColors';
 import TColors from '../apis/TypeColors';

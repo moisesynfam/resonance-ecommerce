@@ -1,9 +1,7 @@
 import React from 'react';
-import { Row, Col, Layout, Typography, Breadcrumb, Skeleton, Divider, Descriptions  } from 'antd' 
-import { connect } from 'react-redux';
-import _ from 'lodash';
+import {  Typography } from 'antd' 
 
-const { Title, Paragraph, Text } = Typography;
+const { Text } = Typography;
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -14,11 +12,8 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 const PriceTag = ({price, size}) => {
 
     return (
-       
         <Text strong type="danger" style={{fontSize: size}}>{ currencyFormatter.format(price) }</Text>
-        
     )
 }
-
 
 export default PriceTag

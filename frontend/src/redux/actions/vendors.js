@@ -1,7 +1,5 @@
 
 import ResonanceApi from '../../apis/Resonance';
-import jwtDecode from 'jwt-decode';
-import isEmpty from 'is-empty';
 
 const types = {
     VENDORS_FETCHED: 'VENDORS_FETCHED',
