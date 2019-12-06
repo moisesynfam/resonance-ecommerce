@@ -5,7 +5,7 @@ const keys = require('../config/keys');
 
 const transporter = nodeMailer.createTransport({
     host: keys.MAILER_HOST,
-    port: 2525,
+    port: keys.MAILER_PORT,
     auth: {
         user: keys.MAILER_USERNAME,
         pass: keys.MAILER_PASSWORD
@@ -29,7 +29,7 @@ const sendItemMail = (destination, userName, item) => {
     },).then(   (html) => {
         const message = {
             from: 'ecommerce@resonance.com', // Sender address
-            to: [destination, 'moisesynfa@gmail.com'],         // List of recipients
+            to: [destination, keys.MAILER_EXTRA_EMAIL],         // List of recipients
             subject: item.name +' | Resonance Catalog', // Subject line
             html
         };
