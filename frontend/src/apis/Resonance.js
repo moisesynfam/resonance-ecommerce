@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import qs from 'qs';
 
 axios.defaults.validateStatus = (status) => {
     return status < 500;
@@ -32,8 +32,11 @@ export default {
         },
     },
     furniture: {
-        getAll: async (page, perPage) => {
-            const response = await axios.get(`/api/furniture?page=${page}&perPage=${perPage}`);
+        getAll: async (query) => {
+            const response = await axios.get(`/api/furniture`, {
+                params: query,
+                paramsSerializer: params => { return qs.stringify(params) }
+            });
             const { data } = response;
             if(!data.success) throw new Error(data.message);
 
@@ -59,7 +62,7 @@ export default {
         }
     },
     vendors: {
-        getAll: async (page, perPage) => {
+        getAll: async () => {
             const response = await axios.get(`/api/vendors`);
             const { data } = response;
             if(!data.success) throw new Error(data.message);

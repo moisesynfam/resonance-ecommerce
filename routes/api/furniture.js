@@ -4,10 +4,11 @@ const db = require('../../config/airtable');
 const passport = require('passport');
 const { formatItemForMail } = require('../../utils');
 const mailer = require('../../mailer');
+const _ = require('lodash');
 
 router.get('/', (req, res) => {
 
-    const { page, perPage } = req.query;
+    const { page, perPage, type, setting, material } = req.query;
     const itemsPerPage = perPage? parseInt(perPage) : 10;
     let pageNumber = page? parseInt(page) : 1;
     let totalRecords = [];
@@ -19,7 +20,18 @@ router.get('/', (req, res) => {
 
     }, (err ) => {
         if(err) throw err;
-        totalRecords = totalRecords.filter(( record => !!record.get('Picture')));
+        totalRecords = totalRecords.filter(( record => {
+            if(!!!record.get('Picture')) return false;
+            let typeMatched = true;
+            let settingMatched = true;
+            let materialMatched = true;
+           
+            if(type) typeMatched = record.get('Type') === type ; 
+            if(setting) settingMatched = _.indexOf(record.get('Settings'), setting) >= 0;
+            if(material) materialMatched = _.indexOf(record.get('Materials and Finishes'), material) >= 0;
+            return typeMatched && settingMatched && materialMatched;
+            
+        }));
 
         //Pagination logic
         const numberOfItems = totalRecords.length;

@@ -11,6 +11,8 @@ import PriceTag from '../../components/PriceTag';
 import Linkify from 'react-linkify';
 import _ from 'lodash';
 import EmailItemButton from '../../components/EmailItemButton';
+import ColorTags from '../../components/ColorTags';
+import ColorTag from '../../components/ColorTag';
 
 
 const { Title, Paragraph, Text } = Typography;
@@ -112,9 +114,11 @@ class ItemDetails extends React.Component {
                         <Descriptions title="" column={1}>
                             <Descriptions.Item label="Price" span={1}><PriceTag price={fields['Unit Cost']}/></Descriptions.Item>
                             <Descriptions.Item label="In Stock" span={1}>{fields['Units In Store']}</Descriptions.Item>
-                            <Descriptions.Item label="Type" span={1}>{ Type }</Descriptions.Item>
-                            <Descriptions.Item label="Materials and Finishes" span={1}>Hangzhou, Zhejiang</Descriptions.Item>
-                            <Descriptions.Item label="Settings" span={1}>empty</Descriptions.Item>
+                            <Descriptions.Item label="Type" span={1}>{ <ColorTag name={Type} type="types" /> }</Descriptions.Item>
+                            <Descriptions.Item label="Materials and Finishes" span={1}>
+                                <ColorTags names={fields['Materials and Finishes']} />
+                            </Descriptions.Item>
+                            <Descriptions.Item label="Settings" span={1}><ColorTags names={fields['Settings']} type="settings" /></Descriptions.Item>
                             <Descriptions.Item label="Dimensions" span={1}> { fields["Size (WxLxH)"]}  </Descriptions.Item>
                             <Descriptions.Item label="Item Link" span={1}> <a href={fields['Link']} target="_blank">{fields['Link']}</a>  </Descriptions.Item>
                         </Descriptions>

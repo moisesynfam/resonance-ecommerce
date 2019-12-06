@@ -5,14 +5,15 @@ import isEmpty from 'is-empty';
 
 const types = {
     FURNITURE_FETCHED: 'FURNITURE_FETCHED',
-    SET_CURRENT_ITEM: 'SET_CURRENT_ITEM'
+    SET_CURRENT_ITEM: 'SET_CURRENT_ITEM',
+    QUERY_CHANGED: 'QUERY_CHANGED'
     
 }
 
-export const fetchFurniture = (page = 1, perPage = 9) => async (dispatch, getState) => {
+export const fetchFurniture = () => async (dispatch, getState) => {
     try {
-        
-        const { furniture, pagination } = await ResonanceApi.furniture.getAll(page, perPage);
+        const { furniture: {query} } = getState();
+        const { furniture, pagination } = await ResonanceApi.furniture.getAll(query);
         
         dispatch({
             type: types.FURNITURE_FETCHED,
@@ -29,6 +30,15 @@ export const fetchFurniture = (page = 1, perPage = 9) => async (dispatch, getSta
 
 
     }
+}
+
+export const changeQuery = (newQueryItem) => async (dispatch, getState) => {
+    
+    await dispatch({
+        type: types.QUERY_CHANGED,
+        payload: {newQueryItem}
+    });
+    dispatch(fetchFurniture());
 }
 
 export const fetchCurrentItem = (itemId) => async (dispatch, getState) => {
@@ -57,7 +67,11 @@ export const fetchCurrentItem = (itemId) => async (dispatch, getState) => {
 const INITIAL_VALUE = {
     items: [],
     pagination: {},
-    currentItem: {}
+    currentItem: {},
+    query: {
+        perPage: 9,
+        page: 1
+    }
 }
 export default (furniture = INITIAL_VALUE, action) => {
 
@@ -66,6 +80,8 @@ export default (furniture = INITIAL_VALUE, action) => {
             return { ...furniture, items: action.payload.furniture, pagination: action.payload.pagination };
         case types.SET_CURRENT_ITEM:
             return { ...furniture, currentItem: action.payload.item };
+        case types.QUERY_CHANGED:
+            return { ...furniture, query: { ...furniture.query, ...action.payload.newQueryItem } };
         default:
             return furniture;
     }

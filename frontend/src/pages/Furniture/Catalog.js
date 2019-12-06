@@ -1,9 +1,16 @@
 import React from 'react';
 import FurnitureItem from '../../components/FurnitureItem'
-import { Row, Col, Layout, Typography, Breadcrumb, Pagination  } from 'antd' 
+import { Row, Col, Layout, Typography, Breadcrumb, Pagination } from 'antd' 
 import { connect } from 'react-redux';
-import { fetchFurniture } from '../../redux/actions/furniture';
+import { fetchFurniture, changeQuery } from '../../redux/actions/furniture';
 import { Link } from 'react-router-dom';
+import mColors from '../../apis/MaterialsColors';
+import ColorSelect from '../../components/ColorSelect';
+import ColorCheckableTags from '../../components/ColorCheckableTags';
+import { CirclePicker } from 'react-color';
+import CatalogFilter from '../../components/CatalogFilter';
+
+const colorKeys = Object.keys(mColors);
 
 const { Title } = Typography;
 class Catalog extends React.Component {
@@ -14,12 +21,20 @@ class Catalog extends React.Component {
 
     componentDidMount() {
         this.props.fetchFurniture();
+        if( this.props.pagination.currentPage 
+            && this.props.pagination.currentPage != this.state.currentPage) 
+            this.setState({currentPage: this.props.pagination.currentPage});
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if(this.state.currentPage > this.props.query.page ) this.setState({currentPage: this.props.query.page});
     }
 
     _onPageChange = page => {
 
         this.setState({ currentPage: page});
-        this.props.fetchFurniture(page);
+        this.props.changeQuery({page});
+        // this.props.fetchFurniture(page);
 
     }
 
@@ -46,15 +61,20 @@ class Catalog extends React.Component {
         return (
            
             <Row type="flex" justify="center" style={{flex: 1}}>
-                <Col xs={24} sm={22} md={18}>
+                <Col xs={24} sm={22} md={18} style={{display: 'flex'}}>
                 <Layout className="Catalog-page">
                     <Layout.Sider 
                         breakpoint="md"
                         collapsedWidth="0"
-                        style={{ backgroundColor: 'white'}}
+                        width={275}
                         theme='light'
                     >
-
+                       {/* <ColorSelect/> */}
+                       <CatalogFilter 
+                       
+                       />
+                      
+                      
                     </Layout.Sider>
                     <Layout.Content style={{background: 'white', padding: '30px 20px'}}>
                         <Breadcrumb>
@@ -85,9 +105,10 @@ class Catalog extends React.Component {
 const mapStateToProps = state => {
     return { 
         items: state.furniture.items,
-        pagination: state.furniture.pagination
+        pagination: state.furniture.pagination,
+        query: state.furniture.query
     }
 }
 
 
-export default connect(mapStateToProps, {fetchFurniture })(Catalog);
+export default connect(mapStateToProps, {fetchFurniture, changeQuery })(Catalog);
