@@ -24,7 +24,8 @@ import PrivateRoute from './components/PrivateRoute';
 import Catalog from './pages/Furniture/Catalog';
 import ItemDetails from './pages/Furniture/ItemDetails';
 
-const store = createStore(reducers, compose(applyMiddleware(reduxThunk), window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
+const devTools = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__() : a => a
+const store = createStore(reducers, compose(applyMiddleware(reduxThunk), devTools));
 
 const initApp = () => {
   //get the vendors on app init for later use

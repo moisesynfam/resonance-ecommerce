@@ -25,7 +25,7 @@ app.use('/api/furniture', require('./routes/api/furniture'));
 app.use('/api/vendors', require('./routes/api/vendors'));
 
 app.get('*', (req,res) =>{
-    res.sendFile(path.join(__dirname+'frontend/build/index.html'));
+    res.sendFile(path.join(__dirname+'/frontend/build/index.html'));
 });
 const port = process.env.PORT || 5000;
 
